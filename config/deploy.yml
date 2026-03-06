@@ -1,0 +1,22 @@
+service: incident-report-generator
+image: YOUR_DOCKERHUB_USERNAME/incident-report-generator
+
+servers:
+  web:
+    hosts:
+      - YOUR_VPS_IP
+
+proxy:
+  host: incidents.yourdomain.com
+  app_port: 8000
+
+registry:
+  username: YOUR_DOCKERHUB_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  dockerfile: Dockerfile
+
+volumes:
+  - "incident-temp:/app/temp"
