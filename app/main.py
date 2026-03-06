@@ -20,6 +20,10 @@ app.add_middleware(
 # Ensure temp dir exists
 TEMP_DIR.mkdir(exist_ok=True)
 
+@app.get("/up")
+def health_check():
+    return {"status": "ok"}
+
 # API routes (must be before static mount)
 app.include_router(upload.router, prefix="/api")
 app.include_router(analyze.router, prefix="/api")
