@@ -14,6 +14,10 @@ class FrameMetadata(BaseModel):
 class UploadResponse(BaseModel):
     job_id: str
     duration_seconds: float
+
+
+class ExtractFramesResponse(BaseModel):
+    job_id: str
     total_frames_extracted: int
     selected_frame_count: int
     frames: list[FrameMetadata]
@@ -22,6 +26,7 @@ class UploadResponse(BaseModel):
 class AnalyzeRequest(BaseModel):
     job_id: str
     api_key: str
+    provider: str = "gemini"  # "gemini" or "claude"
     incident_type: Optional[str] = None
     location: Optional[str] = None
     camera_id: Optional[str] = None

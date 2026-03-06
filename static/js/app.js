@@ -34,7 +34,9 @@ function resetApp() {
   appState.jobId = null;
   appState.frames = [];
   appState.analysis = null;
+  appState.durationSeconds = null;
   document.getElementById('frame-preview').innerHTML = '';
+  document.getElementById('frame-section').hidden = true;
   document.getElementById('report-preview').innerHTML = '';
   document.getElementById('upload-error').hidden = true;
   document.getElementById('upload-status').hidden = true;

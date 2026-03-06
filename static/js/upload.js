@@ -73,24 +73,17 @@ function uploadFile(file) {
   xhr.addEventListener('load', () => {
     if (xhr.status >= 200 && xhr.status < 300) {
       fill.style.width = '100%';
-      text.textContent = 'Processing video...';
+      text.textContent = 'Upload complete';
 
       const data = JSON.parse(xhr.responseText);
       appState.jobId = data.job_id;
-      appState.frames = data.frames;
+      appState.durationSeconds = data.duration_seconds;
 
-      // Show status
-      uploadStatus.textContent =
-        `Extracted ${data.total_frames_extracted} frames (${data.duration_seconds}s video). ` +
-        `${data.selected_frame_count} frames selected for analysis.`;
+      uploadStatus.textContent = `Video uploaded (${data.duration_seconds}s).`;
       uploadStatus.hidden = false;
 
-      // Populate frame preview
-      renderFramePreview(data.frames);
-      document.getElementById('frame-count').textContent =
-        `(${data.selected_frame_count} of ${data.total_frames_extracted} selected)`;
-
       showSection('config');
+      onProviderChange();
     } else {
       let msg = 'Upload failed';
       try {
@@ -111,20 +104,3 @@ function uploadFile(file) {
   xhr.send(formData);
 }
 
-function renderFramePreview(frames) {
-  const grid = document.getElementById('frame-preview');
-  grid.innerHTML = '';
-
-  frames.forEach(frame => {
-    const div = document.createElement('div');
-    div.className = 'frame-thumb' + (frame.selected ? ' selected' : '');
-    div.innerHTML = `
-      <img src="${frame.url}" alt="Frame at ${frame.timestamp}" loading="lazy">
-      <div class="frame-label">
-        <span>${frame.timestamp}</span>
-        <span>${frame.selected ? 'Selected' : ''}</span>
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-}

@@ -8,6 +8,7 @@ servers:
 proxy:
     host: incidents.zonebrite.com
     app_port: 8000
+    ssl: true
 
 registry:
     username: zonebrite

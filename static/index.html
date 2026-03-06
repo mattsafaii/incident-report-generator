@@ -24,7 +24,7 @@
           </svg>
           <p>Drag & drop video here or <label for="file-input" class="link">browse</label></p>
           <input type="file" id="file-input" accept=".mp4,.mov,.mkv,.avi" hidden>
-          <p class="hint">MP4, MOV, MKV, AVI &mdash; Max 5 minutes, 500MB</p>
+          <p class="hint">MP4, MOV, MKV, AVI &mdash; Max 30 minutes, 500MB</p>
         </div>
       </div>
       <div id="upload-progress" class="progress-container" hidden>
@@ -43,9 +43,22 @@
       <div class="config-panel">
         <div class="config-grid">
           <div class="field">
+            <label for="provider">AI Provider</label>
+            <select id="provider">
+              <option value="gemini">Google Gemini (Recommended)</option>
+              <option value="claude">Anthropic Claude</option>
+            </select>
+            <small id="provider-hint">Gemini analyzes the full video natively for better results.</small>
+          </div>
+          <div class="field" id="field-google-key">
+            <label for="google-api-key">Google AI API Key</label>
+            <input type="password" id="google-api-key" placeholder="AIza...">
+            <small>Stored in your browser only. <a href="https://aistudio.google.com/apikey" target="_blank">Get a key</a></small>
+          </div>
+          <div class="field" id="field-anthropic-key" hidden>
             <label for="api-key">Anthropic API Key</label>
             <input type="password" id="api-key" placeholder="sk-ant-...">
-            <small>Stored in your browser only. Never sent to our server.</small>
+            <small>Stored in your browser only. <a href="https://console.anthropic.com/" target="_blank">Get a key</a></small>
           </div>
           <div class="field">
             <label for="incident-type">Suspected Incident Type</label>
@@ -53,6 +66,8 @@
               <option value="">Auto-detect</option>
               <option value="Theft">Theft</option>
               <option value="Trespassing">Trespassing</option>
+              <option value="Vandalism">Vandalism</option>
+              <option value="Suspicious Activity">Suspicious Activity</option>
             </select>
           </div>
           <div class="field">
@@ -66,12 +81,14 @@
         </div>
       </div>
 
-      <h2>Extracted Frames <span id="frame-count" class="badge-count"></span></h2>
-      <p class="hint">Highlighted frames will be sent to the AI model for analysis.</p>
-      <div id="frame-preview" class="frame-grid"></div>
+      <div id="frame-section" hidden>
+        <h2>Extracted Frames <span id="frame-count" class="badge-count"></span></h2>
+        <p class="hint">Highlighted frames will be sent to the AI model for analysis.</p>
+        <div id="frame-preview" class="frame-grid"></div>
+      </div>
 
       <div class="actions-bar">
-        <button id="btn-analyze" class="btn-primary">Analyze with Claude</button>
+        <button id="btn-analyze" class="btn-primary">Analyze Video</button>
         <button id="btn-restart-config" class="btn-secondary">Start Over</button>
       </div>
     </section>
@@ -81,8 +98,8 @@
       <div class="progress-screen">
         <div class="spinner"></div>
         <h2>Analyzing Footage</h2>
-        <p>Claude is reviewing your security camera frames...</p>
-        <p class="hint">This typically takes 15-30 seconds.</p>
+        <p id="progress-message">Analyzing your security camera footage...</p>
+        <p class="hint">This typically takes 30-60 seconds.</p>
       </div>
     </section>
 

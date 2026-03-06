@@ -6,7 +6,7 @@ STATIC_DIR = BASE_DIR / "static"
 TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
 
 MAX_FILE_SIZE_MB = 500
-MAX_DURATION_SECONDS = 300  # 5 minutes
+MAX_DURATION_SECONDS = 1800  # 30 minutes
 MAX_FRAMES_TO_MODEL = 20
 FRAME_MAX_WIDTH = 1024
 ACCEPTED_EXTENSIONS = {".mp4", ".mov", ".mkv", ".avi"}
