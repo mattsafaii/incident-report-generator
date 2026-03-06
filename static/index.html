@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incident Report Generator</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Security Incident Report Generator</h1>
+    <p class="subtitle">Upload security camera footage to generate a structured incident report</p>
+  </header>
+
+  <main>
+    <!-- Section 1: Upload -->
+    <section id="section-upload" class="active">
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-zone-content">
+          <svg class="upload-icon" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p>Drag & drop video here or <label for="file-input" class="link">browse</label></p>
+          <input type="file" id="file-input" accept=".mp4,.mov,.mkv,.avi" hidden>
+          <p class="hint">MP4, MOV, MKV, AVI &mdash; Max 5 minutes, 500MB</p>
+        </div>
+      </div>
+      <div id="upload-progress" class="progress-container" hidden>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <span class="progress-text">Uploading...</span>
+      </div>
+      <div id="upload-status" class="status-message" hidden></div>
+      <div id="upload-error" class="error-message" hidden></div>
+    </section>
+
+    <!-- Section 2: Config + Frame Preview -->
+    <section id="section-config" hidden>
+      <h2>Configuration</h2>
+      <div class="config-panel">
+        <div class="config-grid">
+          <div class="field">
+            <label for="api-key">Anthropic API Key</label>
+            <input type="password" id="api-key" placeholder="sk-ant-...">
+            <small>Stored in your browser only. Never sent to our server.</small>
+          </div>
+          <div class="field">
+            <label for="incident-type">Suspected Incident Type</label>
+            <select id="incident-type">
+              <option value="">Auto-detect</option>
+              <option value="Theft">Theft</option>
+              <option value="Trespassing">Trespassing</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="e.g., Main Entrance">
+          </div>
+          <div class="field">
+            <label for="camera-id">Camera ID</label>
+            <input type="text" id="camera-id" placeholder="e.g., CAM-01">
+          </div>
+        </div>
+      </div>
+
+      <h2>Extracted Frames <span id="frame-count" class="badge-count"></span></h2>
+      <p class="hint">Highlighted frames will be sent to the AI model for analysis.</p>
+      <div id="frame-preview" class="frame-grid"></div>
+
+      <div class="actions-bar">
+        <button id="btn-analyze" class="btn-primary">Analyze with Claude</button>
+        <button id="btn-restart-config" class="btn-secondary">Start Over</button>
+      </div>
+    </section>
+
+    <!-- Section 3: Analysis Progress -->
+    <section id="section-progress" hidden>
+      <div class="progress-screen">
+        <div class="spinner"></div>
+        <h2>Analyzing Footage</h2>
+        <p>Claude is reviewing your security camera frames...</p>
+        <p class="hint">This typically takes 15-30 seconds.</p>
+      </div>
+    </section>
+
+    <!-- Section 4: Report Preview + Edit -->
+    <section id="section-report" hidden>
+      <div class="report-toolbar">
+        <h2>Report Preview</h2>
+        <p class="hint">Click any text to edit before exporting.</p>
+      </div>
+      <div id="report-preview" class="report-preview"></div>
+      <div class="actions-bar">
+        <button id="btn-export" class="btn-primary">Download PDF</button>
+        <button id="btn-restart" class="btn-secondary">Start Over</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/upload.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/analysis.js"></script>
+  <script src="/js/report.js"></script>
+  <script src="/js/export.js"></script>
+</body>
+</html>
